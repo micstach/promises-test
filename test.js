@@ -23,19 +23,25 @@ _.forEach(names, (name)=>{
     promises.push(promise);
 });
 
-var promiseLast = new Promise((resolve, reject)=>{
-  resolve('a developer');
-});
+function countItemsPromise(items) {
+  return new Promise((resolve, reject)=>{
+    resolve(items.length);
+  });
+}
 
-promises.push(promiseLast);
 
 var ret = Promise.all(promises);
 
 //Call the convertImgs method and pass the image files as its argument
 ret.then((stringArray)=>{
-  console.log('Processing done');
-  console.log(stringArray);
-}).catch((someThing) => {
-  console.log('error - ' + someThing);
-});
+    console.log('Processing done');
+    return countItemsPromise(stringArray);
+  })
+  .then((number) => {
+    console.log('Counted: ' + number);
+  })
+  .catch((someThing) => {
+    console.log('error - ' + someThing);
+  });
 
+console.log('end of test.js');
